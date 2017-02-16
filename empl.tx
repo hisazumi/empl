@@ -1,0 +1,25 @@
+Program:
+	defines*=Define
+	matches*=Match
+;
+
+Define:
+	'define' name=ID '{' 
+		decls+=DefineVariable 
+	'}' ';'
+;
+
+DefineVariable:
+	type=ID name=ID ';'
+;
+
+Match:
+	'match' '(' expr=ID ')' '{'
+		cases*=Case
+	'}'
+;
+
+Case:
+	'case' type=ID '[' pats*=ID[','] ']' '{' '}'
+;
+

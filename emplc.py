@@ -1,7 +1,7 @@
 from pyparsing import \
     Literal, Word, ZeroOrMore, Group, Dict, Optional, \
     printables, ParseException, restOfLine, alphas, alphanums, Keyword, \
-    SkipTo, srange, delimitedList
+    SkipTo, srange, delimitedList, Forward
 
 import sys
 
@@ -27,7 +27,7 @@ kdefine = Keyword('define')
 
 # identifier
 identifier = Word(srange("[a-zA-Z0-9_]"))
-# type (not implemented)
+# type
 type = identifier
 # variable
 variable = identifier
@@ -35,10 +35,13 @@ variable = identifier
 defvar = Group(type + variable + semicolon)
 # define type_name { type1 var1; type2 var 2; ... };
 define = Group(kdefine + identifier + lbrace + Group(ZeroOrMore(defvar)) + rbrace + semicolon)
-# pattern (not implemented)
-pattern = Group(delimitedList(identifier))
+# pattern
+type_pattern = Forward()
+pattern = Group(delimitedList(identifier | type_pattern))
+# type and pattern
+type_pattern << type + lbrack + pattern + rbrack
 # case [ pattern ] { codes }
-case = Group(kcase + type + lbrack + pattern + rbrack + lbrace + SkipTo('}') + rbrace)
+case = Group(kcase + type_pattern + lbrace + SkipTo('}') + rbrace)
 # match ( variable ) { case... }
 amatch = Group(kmatch + lpar + variable + rpar + lbrace + Group(ZeroOrMore(case)) + rbrace)
 # empl
@@ -126,4 +129,3 @@ if len(sys.argv) != 2:
 
 result = empl.parseString(open(sys.argv[1]).read())
 gen(result)
-

@@ -9,10 +9,3 @@ define ULDATA {
     uint1 loop_flag;
     uint32 header_size;
 };
-
-match(p) {
-    case ULDATA[ a, b ] {
-    }
-    case ULDATA[ b ] {
-    }
-}
