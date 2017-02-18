@@ -15,9 +15,8 @@ empl = emplm.model_from_file(sys.argv[1])
 
 ##################################
 # Define Table
-deftab = {}
-for d in empl.defines:
-	deftab[d.name] = [[decl.type, decl.name] for decl in d.decls]
+deftab = {d.name: [[decl.type, decl.name] for decl in d.decls]
+			for d in empl.defines}
 
 ##################################
 # Generate
