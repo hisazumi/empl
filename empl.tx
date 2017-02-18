@@ -20,6 +20,11 @@ Match:
 ;
 
 Case:
-	'case' type=ID '[' pats*=ID[','] ']' '{' '}'
+	'case' type=ID '[' pats*=Expression[','] ']' block=Block
 ;
 
+Expression: ID | NUMBER;
+
+Block:
+	'{' /.*/ '}'
+;
