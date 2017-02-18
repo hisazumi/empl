@@ -11,7 +11,7 @@ define ULDATA {
 };
 
 match(p) {
-    case ULDATA[ a, b ] {
+    case ULDATA[ a, PACKET_TYPE[ b ] ] {
             printf ("Hello World\n");
         }
     case ULDATA[ b ] {

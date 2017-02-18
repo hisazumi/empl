@@ -11,8 +11,8 @@ define ULDATA {
 };
 
 match(p) {
-    case ULDATA[ a, b ] {
+    case ULDATA[ 32, 40 ] {
     }
-    case ULDATA[ b ] {
+    case ULDATA[ 30 ] {
     }
 }
