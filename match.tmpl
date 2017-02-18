@@ -1,10 +1,3 @@
-{% for d in defines %}
-struct {{d.name}} {
-  {% for dec in d.decls -%}
-  {{dec.type}} {{dec.name}};
-  {% endfor -%}
-};
-{% endfor %}
 {% for m in matches -%}
 {% for c in m.cases -%}
 {% set d=deftab[c.type] -%}
