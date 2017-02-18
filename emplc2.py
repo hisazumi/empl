@@ -3,7 +3,7 @@ from textx.metamodel import metamodel_from_file
 from jinja2 import Environment, FileSystemLoader
 
 ##################################
-# Main
+# argument check
 if len(sys.argv) != 2:
     print('Usage: python %s file' % sys.argv[0])
     quit()
@@ -14,9 +14,15 @@ emplm = metamodel_from_file('empl.tx')
 empl = emplm.model_from_file(sys.argv[1])
 
 ##################################
+# Define Table
+deftab = {}
+for d in empl.defines:
+	deftab[d.name] = [[decl.type, decl.name] for decl in d.decls]
+
+##################################
 # Generate
 env  = Environment(loader=FileSystemLoader('./', encoding='utf8'))
 tmpl = env.get_template('c.template')
-gend = tmpl.render(defines=empl.defines, matches=empl.matches)
+gend = tmpl.render(defines=empl.defines, matches=empl.matches, deftab=deftab)
 
 print(gend)
