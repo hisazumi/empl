@@ -1,0 +1,14 @@
+{
+__match_expr = 
+{% for c in match.cases -%}
+{% set d=deftab[c.type] -%}
+{%- if loop.index0 != 0 -%} else {% endif -%}
+if(
+{%- for p in c.pats -%}
+{%- if loop.index0 != 0 -%} && {%- endif -%}
+{{match.expr}}.{{d[loop.index0][1]}} == {{p}}
+{%- endfor -%}
+)
+{{c.block}}
+{% endfor %}
+}

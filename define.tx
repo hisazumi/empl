@@ -1,0 +1,13 @@
+Program:
+    define=Define
+;
+
+Define:
+    'define' name=ID '{' 
+        decls+=DefineVariable 
+    '}' ';'
+;
+
+DefineVariable:
+    type=ID name=ID ';'
+;

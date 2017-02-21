@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 define ULDATA {
     uint32 dest;
     uint32 src;
@@ -10,11 +12,13 @@ define ULDATA {
     uint32 header_size;
 };
 
-match(p) {
-    case ULDATA[ a, b ] {
-        printf ("Hello World\n");
-    }
-    case ULDATA[ b ] {
-        foo();
+int main() {
+    match(p) {
+        case ULDATA[ 32, 40 ] {
+            printf("hello");
+        }
+        case ULDATA[ 50 ] {
+            printf("fooo");
+        }
     }
 }

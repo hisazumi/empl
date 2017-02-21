@@ -1,0 +1,19 @@
+Program:
+    match=Match
+;
+
+Match:
+    'match' '(' expr=Expression ')' '{'
+        cases*=Case
+    '}'
+;
+
+Case:
+    'case' type=ID '[' pats*=Expression[','] ']' block=Block
+;
+
+Expression: ID | NUMBER;
+
+Block:
+    '{' /.*/ '}'
+;

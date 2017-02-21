@@ -2,27 +2,107 @@ import sys
 from textx.metamodel import metamodel_from_file
 from jinja2 import Environment, FileSystemLoader
 
+
 ##################################
 # argument check
 if len(sys.argv) != 2:
     print('Usage: python %s file' % sys.argv[0])
     quit()
 
-##################################
-# Read & Parse
-emplm = metamodel_from_file('empl.tx')
-empl = emplm.model_from_file(sys.argv[1])
 
 ##################################
-# Define Table
+# setup textx (parser generator)
+defm = metamodel_from_file('define.tx')
+matchm = metamodel_from_file('match.tx')
+
+
+##################################
+# setup template engine
+env = Environment(loader=FileSystemLoader('./', encoding='utf8'))
+deftmpl = env.get_template('define.tmpl')
+matchtmpl = env.get_template('match.tmpl')
+
+
+##################################
+# Define
 deftab = {}
-for d in empl.defines:
-	deftab[d.name] = [[decl.type, decl.name] for decl in d.decls]
+
+
+def parse_define(src):
+    m = defm.model_from_str(src)
+    deftab[m.define.name] = [[decl.type, decl.name] for decl in m.define.decls]
+    return m.define
+
+
+def gen_define(model):
+    print(deftmpl.render(define=model))
+
 
 ##################################
-# Generate
-env  = Environment(loader=FileSystemLoader('./', encoding='utf8'))
-tmpl = env.get_template('c.template')
-gend = tmpl.render(defines=empl.defines, matches=empl.matches, deftab=deftab)
+# Match
+def parse_match(src):
+    return matchm.model_from_str(src).match
 
-print(gend)
+
+def gen_match(model):
+    print(matchtmpl.render(match=model, deftab=deftab))
+
+
+##################################
+# Parse & Generate
+
+# Some utilities for parser
+# src is not contain start '{'
+def find_nested_paren(src):
+    opened_paren = 1
+    for i, c in enumerate(src):
+        if c == '{':
+            opened_paren += 1
+        elif c == '}':
+            opened_paren -= 1
+
+        if opened_paren <= 0:
+            return i + 1
+    return -1
+
+
+def find_match(src):
+    start_pos = src.find('match')
+    if start_pos < 0:
+        return (-1, -1)
+    body_rpos = src[start_pos:].find('{')
+    end_rpos = find_nested_paren(src[start_pos + body_rpos:])
+    return (start_pos, start_pos + body_rpos + end_rpos)
+
+
+def find_define(src):
+    start_pos = src.find('define')
+    if start_pos <= 0:
+        return (-1, -1)
+    else:
+        return (start_pos, src.find('};') + 2)
+
+
+# Main
+rest = open(sys.argv[1]).read()
+while True:
+    match_index = find_match(rest)
+    define_index = find_define(rest)
+    mi = match_index[0]
+    di = define_index[0]
+
+    if mi < 0 and di < 0:
+        print(rest)
+        break
+    elif (mi >= 0 and di < 0) or (mi < di and mi > 0):
+        i = match_index
+        print(rest[0:i[0]])
+        gen_match(parse_match(rest[i[0]:i[1] - 1]))
+        rest = rest[i[1] - 1:]
+    elif (mi < 0 and di >= 0) or (mi > di and di > 0):
+        i = define_index
+        print(rest[0:i[0]])
+        gen_define(parse_define(rest[i[0]:i[1]]))
+        rest = rest[i[1]:]
+    else:
+        print('error')
