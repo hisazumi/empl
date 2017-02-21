@@ -70,7 +70,7 @@ def gen_match(model):
     cases_pats = [traverse_patterns(model.expr, model.type, c.pat.pats)
                   for c in model.cases]
     blocks = [c.block for c in model.cases]
-    print(matchtmpl.render(match=model, cases_pats=cases_pats, blocks=blocks))
+    print(matchtmpl.render(cases_pats=cases_pats, blocks=blocks))
 
 
 ##################################
