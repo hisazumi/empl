@@ -45,13 +45,32 @@ def parse_match(src):
 
 
 def gen_match(model):
-    if '*' in model.type:
-        type = model.type[:-1]
-        op = '->'
-    else:
-        type = model.type
-        op = '.'
-    print(matchtmpl.render(match=model, type=type, op=op, deftab=deftab))
+    def traverse_patterns(expr, type, pats):
+        # find struct access operator & type
+        if '*' in type:
+            type_wo_p = type[:-1]
+            op = '->'
+        else:
+            type_wo_p = type
+            op = '.'
+
+        # lookup type
+        d = deftab[type_wo_p]
+
+        # traverse
+        tab = []
+        for i, p in enumerate(pats):
+            if len(p.pats) == 0:
+                tab.append(expr + op + d[i][1] + '==' + str(p.expr))
+            else:
+                tab.extend(traverse_patterns(expr + op + d[i][1],
+                                             d[i][0], p.pats))
+        return tab
+
+    cases_pats = [traverse_patterns(model.expr, model.type, c.pat.pats)
+                  for c in model.cases]
+    blocks = [c.block for c in model.cases]
+    print(matchtmpl.render(match=model, cases_pats=cases_pats, blocks=blocks))
 
 
 ##################################

@@ -9,10 +9,14 @@ Match:
 ;
 
 Case:
-    'case' '[' pats*=Expression[','] ']' block=Block
+    'case' pat=Pattern block=Block
 ;
 
 Expression: ID | NUMBER;
+
+Pattern:
+    ('[' pats*=Pattern[','] ']') | expr=Expression
+;
 
 MatchType:
     ID | ID '*'
