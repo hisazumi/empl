@@ -3,7 +3,7 @@ Program:
 ;
 
 Match:
-    'match' '(' type=ID expr=Expression ')' '{'
+    'match' '(' type=MatchType expr=Expression ')' '{'
         cases*=Case
     '}'
 ;
@@ -13,6 +13,10 @@ Case:
 ;
 
 Expression: ID | NUMBER;
+
+MatchType:
+    ID | ID '*'
+;
 
 Block:
     '{' /.*/ '}'

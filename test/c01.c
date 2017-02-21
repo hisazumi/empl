@@ -13,7 +13,7 @@ define ULDATA {
 };
 
 int main() {
-    match(ULDATA p) {
+    match(ULDATA * p) {
         case [ 32, 40 ] {
             printf("hello");
         }

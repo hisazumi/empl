@@ -45,7 +45,13 @@ def parse_match(src):
 
 
 def gen_match(model):
-    print(matchtmpl.render(match=model, deftab=deftab))
+    if '*' in model.type:
+        type = model.type[:-1]
+        op = '->'
+    else:
+        type = model.type
+        op = '.'
+    print(matchtmpl.render(match=model, type=type, op=op, deftab=deftab))
 
 
 ##################################
