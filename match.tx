@@ -3,7 +3,7 @@ Program:
 ;
 
 Match:
-    'match' '(' type=MatchType expr=Expression ')' '{'
+    'match' '(' type=MatchType expr=ID ')' '{'
         cases*=Case
     '}'
 ;
