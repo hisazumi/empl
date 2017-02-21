@@ -22,7 +22,7 @@ int main() {
         case [ b, c, d, e, f, _, [a, b] ] {
             printf("hello");
         }
-        case [ here >= 50 ] {
+        case [ %here >= 50 ] {
             printf("fooo");
         }
     }

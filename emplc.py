@@ -78,7 +78,7 @@ def gen_match(model):
             if len(p.pats) == 0:
                 pexpr = str(p.expr)
                 if 'here' in pexpr:
-                    tab.append(re.sub(r'here', expr + acc + d[i][1], pexpr))
+                    tab.append(re.sub(r'%here', expr + acc + d[i][1], pexpr))
                 elif (str(p.expr) != '_'):
                     tab.append(expr + acc + d[i][1] + expand_expr(pexpr))
             else:
