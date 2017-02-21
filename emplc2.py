@@ -45,14 +45,22 @@ def parse_match(src):
 
 
 def gen_match(model):
+    def expand_expr(expr):
+        ops = ['>=', '<=', '>', '<']
+        for op in ops:
+            pos = expr.find(op)
+            if pos >= 0:
+                return op + expr[pos + len(op) + 1:]
+        return '==' + expr
+
     def traverse_patterns(expr, type, pats):
         # find struct access operator & type
         if '*' in type:
             type_wo_p = type[:-1]
-            op = '->'
+            acc = '->'
         else:
             type_wo_p = type
-            op = '.'
+            acc = '.'
 
         # lookup type
         d = deftab[type_wo_p]
@@ -61,9 +69,9 @@ def gen_match(model):
         tab = []
         for i, p in enumerate(pats):
             if len(p.pats) == 0:
-                tab.append(expr + op + d[i][1] + '==' + str(p.expr))
+                tab.append(expr + acc + d[i][1] + expand_expr(str(p.expr)))
             else:
-                tab.extend(traverse_patterns(expr + op + d[i][1],
+                tab.extend(traverse_patterns(expr + acc + d[i][1],
                                              d[i][0], p.pats))
         return tab
 

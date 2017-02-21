@@ -12,7 +12,9 @@ Case:
     'case' pat=Pattern block=Block
 ;
 
-Expression: ID | NUMBER;
+Expression: ID | NUMBER | (Op ID) | (Op NUMBER);
+
+Op: '<=' | '>=' | '>' | '<';
 
 Pattern:
     ('[' pats*=Pattern[','] ']') | expr=Expression
