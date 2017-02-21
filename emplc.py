@@ -69,7 +69,8 @@ def gen_match(model):
         tab = []
         for i, p in enumerate(pats):
             if len(p.pats) == 0:
-                tab.append(expr + acc + d[i][1] + expand_expr(str(p.expr)))
+                if (str(p.expr) != '_'):
+                    tab.append(expr + acc + d[i][1] + expand_expr(str(p.expr)))
             else:
                 tab.extend(traverse_patterns(expr + acc + d[i][1],
                                              d[i][0], p.pats))

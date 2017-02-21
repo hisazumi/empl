@@ -12,7 +12,7 @@ Case:
     'case' pat=Pattern block=Block
 ;
 
-Expression: ID | NUMBER | (Op ID) | (Op NUMBER);
+Expression: ID | NUMBER | (Op ID) | (Op NUMBER) | '_';
 
 Op: '<=' | '>=' | '>' | '<';
 

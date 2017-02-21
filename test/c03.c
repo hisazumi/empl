@@ -19,7 +19,7 @@ define ULDATA {
 
 int main() {
     match(ULDATA * p) {
-        case [ b, c, d, e, f, g, [a, b] ] {
+        case [ b, c, d, e, f, _, [a, b] ] {
             printf("hello");
         }
         case [ >= 50 ] {
