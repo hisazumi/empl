@@ -65,6 +65,9 @@ def gen_match(model):
         if '*' in type:
             type_wo_p = type[:-1]
             acc = '->'
+        elif '[]' in type:
+            type_wo_p = type[:-2]
+            acc = '[]'
         else:
             type_wo_p = type
             acc = '.'
@@ -72,18 +75,25 @@ def gen_match(model):
         # lookup type
         d = deftab[type_wo_p]
 
+        def access(i):
+            if acc == '->':
+                return expr + acc + d[i][1]
+            elif acc == '[]':
+                return expr + '[' + str(i) + ']'
+            else:
+                return expr + acc + d[i][1]
+
         # traverse
         tab = []
         for i, p in enumerate(pats):
             if len(p.pats) == 0:
                 pexpr = str(p.expr)
                 if '%here' in pexpr:
-                    tab.append(re.sub(r'%here', expr + acc + d[i][1], pexpr))
+                    tab.append(re.sub(r'%here', access(i), pexpr))
                 elif (str(p.expr) != '_'):
-                    tab.append(expr + acc + d[i][1] + expand_expr(pexpr))
+                    tab.append(access(i) + expand_expr(pexpr))
             else:
-                tab.extend(traverse_patterns(expr + acc + d[i][1],
-                                             d[i][0], p.pats))
+                tab.extend(traverse_patterns(access(i), d[i][0], p.pats))
         return tab
 
     cases_pats = [traverse_patterns(model.expr, model.type, c.pat.pats)
