@@ -18,7 +18,7 @@ struct DATA *p;
     case [< 10, < 20] {
         ...
     }
-    case [_, is_good(here)] {
+    case [_, is_good(%here)] {
         ...
     }
 }
@@ -43,3 +43,23 @@ if (p->dest == 10, p->src == 20) {
 }
 ```
 
+## Installation
+
+EMPL requires textX and Jinja2. 
+
+```
+pip install textX
+pip install Jinja2
+```
+
+## Usage
+
+```
+python emplc.py [empl file]
+```
+
+It will generate c code to stdout.
+
+## Limitation
+
+- emplc can read just one file. (it implies %define descriptions should be in one file)
