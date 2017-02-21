@@ -1,4 +1,4 @@
-define ULDATA {
+%define ULDATA {
     uint32 dest;
     uint32 src;
     uint32 fid;

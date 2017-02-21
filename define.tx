@@ -3,7 +3,7 @@ Program:
 ;
 
 Define:
-    'define' name=ID '{' 
+    '%define' name=ID '{' 
         decls+=DefineVariable 
     '}' ';'
 ;

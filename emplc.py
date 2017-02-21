@@ -111,7 +111,7 @@ def find_nested_paren(src):
 
 
 def find_match(src):
-    start_pos = src.find('match')
+    start_pos = src.find('%match')
     if start_pos < 0:
         return (-1, -1)
     body_rpos = src[start_pos:].find('{')
@@ -120,7 +120,7 @@ def find_match(src):
 
 
 def find_define(src):
-    start_pos = src.find('define')
+    start_pos = src.find('%define')
     if start_pos <= 0:
         return (-1, -1)
     else:

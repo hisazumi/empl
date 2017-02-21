@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-define ULDATA {
+%define ULDATA {
     uint32 dest;
     uint32 src;
     uint32 fid;
@@ -13,7 +13,7 @@ define ULDATA {
 };
 
 int main() {
-    match(ULDATA * p) {
+    %match(ULDATA * p) {
         case [ 32, 40 ] {
             printf("hello");
         }

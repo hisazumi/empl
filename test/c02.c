@@ -1,11 +1,11 @@
 #include <stdio.h>
 
-define PACKET_TYPE {
+%define PACKET_TYPE {
     int a;
     int b;
 };
 
-define ULDATA {
+%define ULDATA {
     uint32 dest;
     uint32 src;
     uint32 fid;
@@ -18,7 +18,7 @@ define ULDATA {
 };
 
 int main() {
-    match(ULDATA * p) {
+    %match(ULDATA * p) {
         case [ b, c, d, e, f, g, [a, b] ] {
             printf("hello");
         }

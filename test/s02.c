@@ -1,4 +1,4 @@
-define ULDATA {
+%define ULDATA {
     uint32 dest;
     uint32 src;
     uint32 fid;
@@ -10,7 +10,7 @@ define ULDATA {
     uint32 header_size;
 };
 
-match(p) {
+%match(p) {
     case ULDATA[ a, b ] {
         printf ("Hello World\n");
     }
