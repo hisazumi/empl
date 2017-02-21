@@ -46,12 +46,18 @@ def parse_match(src):
 
 def gen_match(model):
     def expand_expr(expr):
-        ops = ['>=', '<=', '>', '<']
-        for op in ops:
-            pos = expr.find(op)
-            if pos >= 0:
-                return op + expr[pos + len(op) + 1:]
-        return '==' + expr
+        def startswithop(str):
+            ops = ['>=', '<=']
+            ops.extend(list("><+-*/"))
+            for op in ops:
+                if expr.startswith(op):
+                    return True
+            return False
+
+        if startswithop(expr):
+            return expr
+        else:
+            return '==' + expr
 
     def traverse_patterns(expr, type, pats):
         # find struct access operator & type

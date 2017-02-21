@@ -12,13 +12,17 @@ Case:
     'case' pat=Pattern block=Block
 ;
 
-Expression: ID | NUMBER | (Op ID) | (Op NUMBER) | '_';
-
-Op: '<=' | '>=' | '>' | '<';
-
 Pattern:
     ('[' pats*=Pattern[','] ']') | expr=Expression
 ;
+
+Expression: Value | (Cmp Value) | (Op Value Cmp Value) | '_';
+
+Value: ID | NUMBER;
+
+Cmp: '<=' | '>=' | '>' | '<';
+
+Op: '+' | '-' | '*' | '/';
 
 MatchType:
     ID | ID '*'
