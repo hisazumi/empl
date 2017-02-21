@@ -16,13 +16,13 @@ Pattern:
     ('[' pats*=Pattern[','] ']') | expr=Expression
 ;
 
-Expression: Value | (Cmp Value) | (Op Value Cmp Value) | '_';
+Expression: (('here' | Value | Cmp | Op)+) | (Op (Value | Cmp | Op)+) | (Cmp Value) | Value | '_';
 
 Value: ID | NUMBER;
 
 Cmp: '<=' | '>=' | '>' | '<';
 
-Op: '+' | '-' | '*' | '/';
+Op: '+' | '-' | '*' | '/' | '.';
 
 MatchType: ID | ID '*';
 

@@ -1,6 +1,7 @@
 import sys
 from textx.metamodel import metamodel_from_file
 from jinja2 import Environment, FileSystemLoader
+import re
 
 
 ##################################
@@ -75,8 +76,11 @@ def gen_match(model):
         tab = []
         for i, p in enumerate(pats):
             if len(p.pats) == 0:
-                if (str(p.expr) != '_'):
-                    tab.append(expr + acc + d[i][1] + expand_expr(str(p.expr)))
+                pexpr = str(p.expr)
+                if 'here' in pexpr:
+                    tab.append(re.sub(r'here', expr + acc + d[i][1], pexpr))
+                elif (str(p.expr) != '_'):
+                    tab.append(expr + acc + d[i][1] + expand_expr(pexpr))
             else:
                 tab.extend(traverse_patterns(expr + acc + d[i][1],
                                              d[i][0], p.pats))
