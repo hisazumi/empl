@@ -1,7 +1,5 @@
-{% for d in defines %}
-struct {{d.name}} {
-  {% for dec in d.decls -%}
+struct {{define.name}} {
+  {% for dec in define.decls -%}
   {{dec.type}} {{dec.name}};
   {% endfor -%}
 };
-{% endfor %}

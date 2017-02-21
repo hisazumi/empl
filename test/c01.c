@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 define ULDATA {
     uint32 dest;
     uint32 src;
@@ -13,8 +15,10 @@ define ULDATA {
 int main() {
     match(p) {
         case ULDATA[ 32, 40 ] {
+            printf("hello");
         }
-        case ULDATA[ 30 ] {
+        case ULDATA[ 50 ] {
+            printf("fooo");
         }
     }
 }

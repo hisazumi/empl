@@ -12,9 +12,9 @@ define ULDATA {
 
 match(p) {
     case ULDATA[ a, b ] {
-            printf ("Hello World\n");
-        }
+        printf ("Hello World\n");
+    }
     case ULDATA[ b ] {
-            foo();
-        }
+        foo();
+    }
 }
