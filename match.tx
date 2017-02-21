@@ -3,13 +3,13 @@ Program:
 ;
 
 Match:
-    'match' '(' expr=Expression ')' '{'
+    'match' '(' type=ID expr=Expression ')' '{'
         cases*=Case
     '}'
 ;
 
 Case:
-    'case' type=ID '[' pats*=Expression[','] ']' block=Block
+    'case' '[' pats*=Expression[','] ']' block=Block
 ;
 
 Expression: ID | NUMBER;

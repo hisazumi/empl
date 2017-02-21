@@ -1,6 +1,6 @@
 {
+{% set d=deftab[match.type] -%}
 {% for c in match.cases -%}
-{% set d=deftab[c.type] -%}
 {%- if loop.index0 != 0 -%} else {% endif -%}
 if(
 {%- for p in c.pats -%}

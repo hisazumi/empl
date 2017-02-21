@@ -13,11 +13,11 @@ define ULDATA {
 };
 
 int main() {
-    match(p) {
-        case ULDATA[ 32, 40 ] {
+    match(ULDATA p) {
+        case [ 32, 40 ] {
             printf("hello");
         }
-        case ULDATA[ 50 ] {
+        case [ 50 ] {
             printf("fooo");
         }
     }
