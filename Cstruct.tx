@@ -1,0 +1,28 @@
+Program:
+    struct=Struct
+    rest*=Rest
+;
+
+Struct:
+    'struct' name=ID '{'
+        decls*=Decl
+    '}' ';'
+;
+
+Decl: (VarDecl | FuncPDecl) ';';
+
+VarDecl: type=Type name=ID array*=Array;
+
+FuncPDecl: FuncP;
+
+Array: '[' /[0-9]+/ ']' ;
+
+Rest: /.*/ ;
+
+Type: (NormalType /\**/) | FuncP;
+
+NormalType: ID | ('struct' ID);
+
+Pointer: '*' ;
+
+FuncP:	ID '(' '*' ID ')' '(' /[a-zA-Z0-9_\*\s]*/ ')' ;
