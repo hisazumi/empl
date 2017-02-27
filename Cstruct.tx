@@ -1,15 +1,15 @@
 Program:
-    struct=Struct | typedef=Typedef
+    (struct=Struct | typedef=Typedef) ';'
     rest*=Rest
 ;
 
 Struct:
     'struct' name=ID '{'
     decls*=Decl
-    '}' ';'
+    '}'
 ;
     
-Typedef: 'typedef' (Type | Struct) name=ID;
+Typedef: 'typedef' (orig=Type | struct=Struct) name=ID;
 
 Decl: (VarDecl | FuncPDecl) ';';
 
@@ -23,6 +23,8 @@ Rest: /.*/ ;
 
 Type: (NormalType /\**/) | ('struct' ID) | FuncP;
 
-NormalType: (('signed' | 'unsigned') ID) | ID;
+NormalType: ('long' ('signed' | 'unsigned') SNormalType) | (('signed' | 'unsigned') SNormalType) | SNormalType;
+
+SNormalType: ('long' 'long') | ID;
 
 FuncP:	ID '(' '*' ID ')' '(' /[a-zA-Z0-9_\*\s]*/ ')' ;
