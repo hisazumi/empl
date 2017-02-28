@@ -120,8 +120,8 @@ def gen_match(model):
         for i, p in enumerate(pats):
             if len(p.pats) == 0:
                 pexpr = str(p.expr)
-                if '%here' in pexpr:
-                    tab.append(re.sub(r'%here', access(i), pexpr))
+                if '%h' in pexpr:
+                    tab.append(re.sub(r'%h', access(i), pexpr))
                 elif (str(p.expr) != '_'):
                     tab.append(access(i) + expand_expr(pexpr))
             else:

@@ -16,7 +16,7 @@ int main() {
         [[10, 20], b] {
             printf("hello");
         }
-        [ %here >= 50 ] {
+        [ %h >= 50 ] {
             printf("fooo");
         }
     }

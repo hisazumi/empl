@@ -22,7 +22,7 @@ int main() {
         [ b, c, d, e, f, _, [a, b] ] {
             printf("hello");
         }
-        [ %here >= 50 ] {
+        [ %h >= 50 ] {
             printf("fooo");
         }
     }

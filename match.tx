@@ -16,7 +16,7 @@ Pattern:
     ('[' pats*=Pattern[','] ']') | expr=Expression
 ;
 
-Expression: (('%here' | Value | Cmp | Op)+) | (Op (Value | Cmp | Op)+) | (Cmp Value) | Value | '_';
+Expression: (('%h' | Value | Cmp | Op)+) | (Op (Value | Cmp | Op)+) | (Cmp Value) | Value | '_';
 
 Value: ID | NUMBER;
 
