@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-%define ULDATA {
+struct ULDATA
+{
     uint32 dest;
     uint32 src;
     uint32 fid;

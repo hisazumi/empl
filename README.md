@@ -45,7 +45,7 @@ if (p->dest == 10 && p->src == 20) {
 
 ## Installation
 
-EMPL requires textX and Jinja2. 
+EMPL requires textX, Jinja2, gcc.
 
 ```
 pip install textX
@@ -60,6 +60,4 @@ python emplc.py [empl file]
 
 It will generate c code to stdout.
 
-## Limitation
 
-- emplc can read just one file. (it implies %define descriptions should be in one file)
