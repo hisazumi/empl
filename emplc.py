@@ -28,20 +28,21 @@ deftab = {'signedchar':False, 'unsignedchar':False, 'short':False, 'unsignedshor
               '__mbstate_t':False, 'longunsignedint':False,
               'longlong':False, '__builtin_va_list':False}
 
-def find_or(rest, key1, key2):
-    pos1 = rest.find(key1)
-    pos2 = rest.find(key2)
-    if pos1 < 0 and pos2 < 0:
-        return -1
-    elif pos1 >= 0 and ((pos1 < pos2) or (pos2 < 0)):
-        return pos1
-    elif pos2 >= 0 and ((pos2 < pos1) or (pos1 < 0)):
-        return pos2
-    else:
-        print(pos1, pos2)
-        return -1
     
 def read_struct_and_typedef(rest):
+    def find_or(rest, key1, key2):
+        pos1 = rest.find(key1)
+        pos2 = rest.find(key2)
+        if pos1 < 0 and pos2 < 0:
+            return -1
+        elif pos1 >= 0 and ((pos1 < pos2) or (pos2 < 0)):
+            return pos1
+        elif pos2 >= 0 and ((pos2 < pos1) or (pos1 < 0)):
+            return pos2
+        else:
+            print(pos1, pos2)
+            return -1
+    
     while True:
         pos = find_or(rest, 'struct', 'typedef')
         if pos < 0:
@@ -133,20 +134,18 @@ def gen_match(model):
     print(matchtmpl.render(cases_pats=cases_pats, blocks=blocks))
 
     
-def find_nested_paren(src):
-    opened_paren = 1
-    for i, c in enumerate(src):
-        if c == '{':
-            opened_paren += 1
-        elif c == '}':
-            opened_paren -= 1
-
-        if opened_paren <= 0:
-            return i + 1
-    return -1
-
-
 def find_match(src):
+    def find_nested_paren(src):
+        opened_paren = 1
+        for i, c in enumerate(src):
+            if c == '{':
+                opened_paren += 1
+            elif c == '}':
+                opened_paren -= 1
+            if opened_paren <= 0:
+                return i + 1
+        return -1
+
     start_pos = src.find('%match')
     if start_pos < 0:
         return (-1, -1)
@@ -158,17 +157,15 @@ def find_match(src):
 def pass2(file):
     rest = open(sys.argv[1]).read()
     while True:
-        match_index = find_match(rest)
-        mi = match_index[0]
+        mi = find_match(rest)
 
-        if mi < 0:
+        if mi[0] < 0:
             print(rest)
             break
-        elif mi > 0:
-            i = match_index
-            print(rest[0:i[0]])
-            gen_match(parse_match(rest[i[0]:i[1] - 1]))
-            rest = rest[i[1] - 1:]
+        elif mi[0] > 0:
+            print(rest[0:mi[0]])
+            gen_match(parse_match(rest[mi[0]:mi[1] - 1]))
+            rest = rest[mi[1] - 1:]
         else:
             print('error')
 
