@@ -1,11 +1,11 @@
 #include <stdio.h>
 
-%define PACKET_TYPE {
+struct PACKET_TYPE {
     int a;
     int b;
 };
 
-%define ULDATA {
+struct ULDATA {
     PACKET_TYPE pt;
     uint1 loop_flag;
     uint32 header_size;
