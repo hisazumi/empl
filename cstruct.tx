@@ -1,0 +1,30 @@
+Program:
+    (struct=Struct | typedef=Typedef) ';'
+    rest*=Rest
+;
+
+Struct:
+    'struct' name=ID '{'
+    decls*=Decl
+    '}'
+;
+    
+Typedef: 'typedef' (orig=Type | struct=Struct) name=ID;
+
+Decl: (VarDecl | FuncPDecl) ';';
+
+VarDecl: type=Type name=ID array*=Array;
+
+FuncPDecl: FuncP;
+
+Array: '[' /[0-9]+/ ']' ;
+
+Rest: /.*/ ;
+
+Type: (NormalType /\**/) | ('struct' ID) | FuncP;
+
+NormalType: ('long' ('signed' | 'unsigned') SNormalType) | (('signed' | 'unsigned') SNormalType) | SNormalType;
+
+SNormalType: ('long' 'long') | ID;
+
+FuncP:	ID '(' '*' ID ')' '(' /[a-zA-Z0-9_\*\s]*/ ')' ;
