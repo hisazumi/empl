@@ -5,7 +5,7 @@ TARGETS=$(subst test/, test/gen/, $(SOURCES))
 
 all: $(TARGETS)
 
-test/gen/%.c : test/%.c
+test/gen/%.c : test/%.c emplc.py
 	python3 emplc.py $< | indent > $@
 
 clean:
