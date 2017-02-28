@@ -9,7 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 ##################################
 # setup
 # textx (parser generator)
-structm = metamodel_from_file('Cstruct.tx')
+structm = metamodel_from_file('cstruct.tx')
 matchm = metamodel_from_file('match.tx')
 
 # setup template engine
