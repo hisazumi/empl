@@ -19,10 +19,10 @@ struct ULDATA {
 
 int main() {
     %match(ULDATA * p) {
-        case [ b, c, d, e, f, g, [a, b] ] {
+        [ b, c, d, e, f, g, [a, b] ] {
             printf("hello");
         }
-        case [ 50 ] {
+        [ 50 ] {
             printf("fooo");
         }
     }

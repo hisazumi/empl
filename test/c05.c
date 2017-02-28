@@ -13,10 +13,10 @@ struct ULDATA {
 
 int main() {
     %match(ULDATA[] p) {
-        case [[10, 20], b] {
+        [[10, 20], b] {
             printf("hello");
         }
-        case [ %here >= 50 ] {
+        [ %here >= 50 ] {
             printf("fooo");
         }
     }

@@ -9,7 +9,7 @@ Match:
 ;
 
 Case:
-    'case' pat=Pattern block=Block
+    pat=Pattern block=Block
 ;
 
 Pattern:
