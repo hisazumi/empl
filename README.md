@@ -4,7 +4,7 @@
 
 ### source code
 ```
-%define DATA {
+struct DATA {
     int dest;
     int src;
 };
@@ -12,13 +12,13 @@
 struct DATA *p;
 ...
 %match(DATA * p) {
-    case [10, 20] {
+    [10, 20] {
         ...
     }
-    case [< 10, < 20] {
+    [< 10, < 20] {
         ...
     }
-    case [_, is_good(%here)] {
+    [_, is_good(%here)] {
         ...
     }
 }
