@@ -14,7 +14,6 @@ matchm = metamodel_from_file('match.tx')
 
 # setup template engine
 env = Environment(loader=FileSystemLoader('./', encoding='utf8'))
-deftmpl = env.get_template('define.tmpl')
 matchtmpl = env.get_template('match.tmpl')
 
 
