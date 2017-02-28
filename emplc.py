@@ -125,7 +125,12 @@ def gen_match(model):
                 elif (str(p.expr) != '_'):
                     tab.append(access(i) + expand_expr(pexpr))
             else:
-                tab.extend(traverse_patterns(access(i), d[i][0], p.pats))
+                if acc == '[]':
+                    # array
+                    tab.extend(traverse_patterns(access(i), type_wo_p, p.pats))
+                else:
+                    # struct
+                    tab.extend(traverse_patterns(access(i), d[i][0], p.pats))
         return tab
 
     cases_pats = [traverse_patterns(model.expr, model.type, c.pat.pats)
