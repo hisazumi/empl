@@ -140,6 +140,7 @@ def gen_match(model):
 
     
 def find_match(src):
+    """ find next %match and return (start position, end position) of src """
     def find_nested_paren(src):
         opened_paren = 1
         for i, c in enumerate(src):
@@ -162,15 +163,15 @@ def find_match(src):
 def pass2(file):
     rest = open(sys.argv[1]).read()
     while True:
-        mi = find_match(rest)
-
-        if mi[0] < 0:
+        spos, epos = find_match(rest)
+        
+        if spos < 0:
             print(rest)
             break
-        elif mi[0] > 0:
-            print(rest[0:mi[0]])
-            gen_match(parse_match(rest[mi[0]:mi[1] - 1]))
-            rest = rest[mi[1] - 1:]
+        elif spos > 0:
+            print(rest[0:spos])
+            gen_match(parse_match(rest[spos:epos - 1]))
+            rest = rest[epos - 1:]
         else:
             print('error')
 
