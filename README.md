@@ -18,7 +18,7 @@ struct DATA *p;
     [< 10, < 20] {
         ...
     }
-    [_, is_good(%here)] {
+    [_, is_good(%h)] {
         ...
     }
 }
